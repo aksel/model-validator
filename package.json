@@ -1,5 +1,5 @@
 {
-  "name": "model-validator",
+  "name": "express-model-validator",
   "version": "1.0.0",
   "description": "PropTypes-like validation for Express.",
   "main": "index.js",
