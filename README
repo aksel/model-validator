@@ -1,5 +1,29 @@
 # model-validator
 
-PropTypes-like validation for Express.
+Validation against models.
 
 Heavily inspired by React's PropTypes.
+
+# Usage
+const { validate, types } = require('express-model-validator');
+
+const model = {
+  name: types.string.isRequired, // Must be string
+  age: types.number, // Optional, must be number
+};
+
+validate(model, { name: 'Aksel' }); // true
+validate(model, { name: 'Aksel', age: 12 }); // true
+validate(model, { name: 1 }); // false
+validate(model, { foo: 'bar' }); // false
+
+// As Express middleware
+const validateMiddleware = model => (req, res, next) => {
+  if (validate(model, req.body)) {
+    next();
+  } else {
+    res.sendStatus(400);
+  }
+};
+
+app.use('/validate', validateMiddleware(model));
