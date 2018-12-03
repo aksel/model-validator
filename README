@@ -1,0 +1,5 @@
+# model-validator
+
+PropTypes-like validation for Express.
+
+Heavily inspired by React's PropTypes.

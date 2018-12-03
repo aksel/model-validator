@@ -1,0 +1,19 @@
+{
+  "name": "model-validator",
+  "version": "1.0.0",
+  "description": "PropTypes-like validation for Express.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aksel/model-validator.git"
+  },
+  "author": "torgard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aksel/model-validator/issues"
+  },
+  "homepage": "https://github.com/aksel/model-validator#readme"
+}
