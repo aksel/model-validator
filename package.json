@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/aksel/model-validator/issues"
   },
-  "homepage": "https://github.com/aksel/model-validator#readme"
+  "homepage": "https://github.com/aksel/model-validator#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
 }
