@@ -126,3 +126,25 @@ test('{ oneOf: \'baz\' } is invalid against oneOf[\'foo\',\'bar\']', () => {
 test('{ oneOf: \'baz\' } is invalid against non-required oneOf[\'foo\',\'bar\']', () => {
   expect(validate({ oneOf: types.oneOf(['foo', 'bar']) }, { oneOf: 'baz' })).toBe(false);
 });
+
+test('ArrayOf validator works', () => {
+  const model = {
+    arrayOf: types.arrayOf(types.shape({
+      foo: types.string.isRequired,
+      bar: types.boolean,
+    })).isRequired,
+  };
+
+  const data = {
+    arrayOf: [{ foo: 'bar' }, { foo: 'bar', bar: true }],
+  };
+
+  expect(validate(model, data)).toBe(true);
+  expect(validate(model, { arrayOf: [{ foo: 'bar' }, { invalid: true }, { foo: 'bar' }]})).toBe(false);
+
+  expect(validate({ numbers: types.arrayOf(types.number) }, { numbers: [1, 2, 3] })).toBe(true);
+  expect(validate({ numbers: types.arrayOf(types.number) }, { numbers: [1, 'asdf'] })).toBe(false);
+
+  expect(validate({ numbers: types.arrayOf(types.number) }, { numbers: [] })).toBe(true);
+  expect(validate({ numbers: types.arrayOf(types.number) }, { numbers: {} })).toBe(false);
+});

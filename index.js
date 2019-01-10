@@ -62,6 +62,32 @@ function createShapeValidator(model) {
   return chain(checkTypes);
 }
 
+function createArrayOfValidator(validator) {
+  if (typeof validator !== 'function') {
+    throw new Error(`ArrayOf validator expects a validator \`function\`, e.g. types.shape(someModel), but got \`${typeof validator}\``);
+  }
+
+  function checkTypes(isRequired, params, paramName) {
+    const array = params[paramName];
+    const type = typeof array;
+
+    if (type === 'undefined') {
+      if (isRequired) {
+        return new Error(`Required param \`${paramName}\` missing`);
+      }
+      return null;
+    }
+
+    if (!Array.isArray(array)) {
+      return new Error(`arrayOf param \`${paramName}\` expects \`array\`, but got \`${type}\``);
+    }
+
+    return array.some(nested => validator({ nested }, 'nested'));
+  }
+
+  return chain(checkTypes);
+}
+
 function createOneOfValidator(array) {
   if (!Array.isArray(array)) {
     throw new Error(`OneOf validator expects \`array\`, but got \`${typeof array}\``);
@@ -96,6 +122,7 @@ const types = {
   function: createValidator(p => typeof p === 'function'),
   shape: createShapeValidator,
   oneOf: createOneOfValidator,
+  arrayOf: createArrayOfValidator,
 };
 
 module.exports = {
