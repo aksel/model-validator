@@ -25,7 +25,7 @@ const validate = (model, params = {}) => {
 function createValidator(isValid) {
   function checkType(isRequired, params, paramName) {
     const param = params[paramName];
-    if (!param) {
+    if (typeof param === 'undefined') {
       if (isRequired) {
         return new Error(`Required param \`${paramName}\` missing`);
       }
