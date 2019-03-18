@@ -115,6 +115,7 @@ function chain(func) {
 }
 
 const types = {
+  any: createValidator(p => typeof p),
   string: createValidator(p => typeof p === 'string'),
   number: createValidator(p => typeof p === 'number'),
   array: createValidator(Array.isArray),

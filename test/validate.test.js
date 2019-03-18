@@ -148,3 +148,17 @@ test('ArrayOf validator works', () => {
   expect(validate({ numbers: types.arrayOf(types.number) }, { numbers: [] })).toBe(true);
   expect(validate({ numbers: types.arrayOf(types.number) }, { numbers: {} })).toBe(false);
 });
+
+test('Any validator works', () => {
+  expect(validate({ any: types.any }, { any: 'foo' })).toBe(true);
+  expect(validate({ any: types.any }, { any: 1 })).toBe(true);
+
+  // Undefined is also acceptable, if any is not required.
+  expect(validate({ any: types.any }, {})).toBe(true);
+
+  expect(validate({ any: types.any.isRequired }, { any: Function.prototype })).toBe(true);
+  expect(validate({ any: types.any.isRequired }, { any: NaN })).toBe(true);
+
+  // Undefined is not acceptable, if any is not required.
+  expect(validate({ any: types.any.isRequired }, {})).toBe(false);
+});
